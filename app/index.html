@@ -1,0 +1,74 @@
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet/less" type="text/css" href="styles/ticketcard.less" />
+	<script src="javascript/less.js" type="text/javascript"></script>
+</head>
+<body class="post-it">
+<div id="print-list-title">
+    <input id="usr" type="text" value='' placeholder="username"/><br/>
+    <input id="pwd" type="password" value='' placeholder="password"/><br/>
+    <label><input type="radio" name="format" value="post-it" checked/>Post-It</label>
+    <label><input type="radio" name="format" value="index-card"/>3x5 Card</label><br/>
+    JQL:<input id="jql" type="text" value='Labels in (Compliance_Banking) ORDER BY Rank ASC'/><button>GO</button>
+</div>
+<div id="print-list">
+<ul id="checklist">
+</ul>
+</div>
+<div id="issues"></div>
+<script type="html/template" id="checklist_item_template">
+	<li>
+		<label><input type="checkbox" checked="checked" data-id="<%= id %>" onClick="if(this.checked){$('#card_'+$(this).attr('data-id')).show();}else{$('#card_'+$(this).attr('data-id')).hide();}"><%= fields.summary %></label>
+	</li>
+</script>
+<script type="html/template" id="card_template">
+	<div id="card_<%= id %>" class="card <%= fields.issuetype.name.toLowerCase().replace(" ","-") %>">
+		<div class="ticket-id <%= fields.priority.name.toLowerCase().replace(" ","-") %>"><%= key %></div>
+		<div class="title"><%= fields.summary %></div>
+		<div class="description"><%= fields.description ? fields.description : '' %></div>
+	</div>
+</script>
+<script src="javascript/jquery.js"></script>
+<script src="javascript/underscore.js"></script>
+<script>
+$(function(){
+	var $issues = $('#issues'), 
+	    $checklist = $('#checklist'),
+	    cardTemplate = _.template($('#card_template').html()),
+	    checklistItemTemplate = _.template($('#checklist_item_template').html());
+
+  function clearIssues(){
+    $issues.html('');
+    $checklist.html('');
+  }
+
+  function processIssue(issue){
+    var $card = $(cardTemplate(issue)),
+        $checklistItem = $(checklistItemTemplate(issue));
+    $issues.append($card);
+    $checklist.append($checklistItem);
+  }
+
+  function processIssues(issues){
+    for(var i = 0, c = issues.length; i < c; i++){
+      processIssue(issues[i]);
+    }
+  }
+
+	function load() {
+		$.post('search', { usr: $('#usr').val(), pwd: $('#pwd').val(), jql: $('#jql').val()}, function(result){
+      clearIssues();
+      processIssues(result.issues);
+		});
+	}
+	$('#print-list-title button').click(load);
+	$('#print-list-title input[type="radio"]').click(function(){
+		$('body').attr('class', '');
+		$('body').addClass($(this).val());
+	});
+	//load();
+});
+</script>
+</body>
+</html>

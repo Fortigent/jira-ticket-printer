@@ -1,0 +1,121 @@
+body { 
+		font-family: 'Segoe UI'; 
+		font-size: 12pt; 
+		line-height: 14pt;
+	}
+	.card {	
+		background-repeat: no-repeat;
+		border: 1pt solid #ccc;	
+		float: left; 
+		margin: 12pt; 
+		overflow: hidden; 
+		padding: 12pt; 
+		page-break-inside: avoid;  }
+	.index-card .card {	
+		background-position: 318pt 10pt;
+		height: 178pt; 
+		width: 316pt;  }
+	.post-it .card {	
+		background-position: 180pt 10pt;
+		height: 178pt;
+		width: 178pt;  }
+	.story { 
+		background-image: url(../images/ico_story.png);
+	}
+	.bug { 
+		background-color: #FED8D8;
+ 		background-image: url(../images/bug.png);
+	}
+	.change-request { 
+		background-color: #E5E5FE;
+		background-image: url(../images/improvement.png);
+	}
+	.normal { 
+		color: #666;
+	}
+	.major { 
+		color: #f00;  
+		font-weight: normal;
+		background-image: url(../images/major.png);
+	}
+	.critical { 
+		color: #f00;  
+		font-weight: bold;
+		background-image: url(../images/critical.png);
+	}
+	.minor { 
+		color: #00f;	
+		background-image: url(../images/minor.png);
+	}
+	.blocker { 
+		color: #00f;	
+		background-image: url(../images/blocker.png);
+	}
+	.title { 
+		font-weight: bold; 
+		margin: 12pt 0 12pt 0;
+	}
+	.ticket-id { 
+		font-size: 10pt; 
+		line-height: 12pt;
+		background-repeat: no-repeat; 
+	}
+	.index-card .ticket-id {
+		background-position: 292pt 0pt;
+	}
+	.post-it .ticket-id {
+		background-position: 152pt 0pt;
+	}
+	.description { 
+		font-size: 10pt; 
+		line-height: 12pt;
+	}
+	#print-list-title {
+		width: 270px;
+		margin: 0;
+		padding: 0;
+		position: absolute;
+		right: 0;
+		top:0;
+		height: 96px;
+		font-weight: bold;
+		text-align: center;
+	}
+	#print-list {
+		width: 270px;
+		font-size: 70%;
+		margin:0;
+		padding:0;
+		position: absolute;
+		right: 0;
+		top: 96px;
+		bottom: 0;
+		overflow: hidden;
+		overflow-y: scroll;
+		scroll-y: auto;
+	}
+	#issues{
+		position: absolute;
+		left:0;
+		right: 270px;
+		top: 0;
+		bottom: 0;
+		overflow: hidden;
+		overflow-y: scroll;
+		scroll-y: auto;
+	}
+	#checklist li{
+		list-style: none;
+	}
+	#checklist li input[type="checkbox"]{
+		margin-left: -1.25em;
+	}
+	@media print {
+		#print-list-title, #print-list, #issues {
+			position: relative;
+			overflow: visible;
+		}
+		#print-list-title, #print-list {
+			display: none;
+		}
+	}
